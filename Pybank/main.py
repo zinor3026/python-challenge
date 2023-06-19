@@ -51,3 +51,12 @@ print(f"Total : {total_amount}")
 print(f"Average Change : $ {avg_change}")
 print(f"Greatest increase in profits : {greatest_increase}")
 print(f"Greatest decrease in profits : {greatest_decrease}")
+
+output_path = os.path.join('python-challenge','Pybank','analysis','financial_analysis.txt') 
+
+with open(output_path,'w') as result:
+    result.write(f"Total Months : {total_month}\n")
+    result.write(f"Total : {total_amount}\n")
+    result.write(f"Average Change : $ {avg_change}\n")
+    result.write(f"Greatest increase in profits : {greatest_increase}\n")
+    result.write(f"Greatest decrease in profits : {greatest_decrease}\n")
