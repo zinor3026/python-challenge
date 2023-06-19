@@ -4,10 +4,12 @@ import csv
 # defining variables
 total_month = 0
 total_amount = 0
-changes = 0
+changes = [] 
+previous = 0
 avg_change = 0
 greatest_increase = 0
 greatest_decrease = 0
+
 
 #defining path to csv file in resources
 path = os.path.join('python-challenge','Pybank','Resources','budget_data.csv')
@@ -21,9 +23,31 @@ with open(path) as budget:
     
     for row in budget_reader:
 
-        # If the state's name in a row is equal to that which the user input, run the 'print_percentages()' function
+        # Calculate total month by counting the rows as each rows have unique month
         total_month += 1
+        #Calculate total amount by summing them all
         total_amount += int(row[1])
-
+        # Calculate changes
+        current_change = int(row[1])
+        if total_month > 1:
+            
+            change = current_change - previous
+            changes.append(change)
+    
+        previous = current_change  
+        
+    #Calculating average change
+    avg_change = sum(changes)/len(changes)
+    avg_change = round(avg_change, 2)
+    
+    #Calculating greatest increase and decrease
+    greatest_increase = max(changes)
+    greatest_decrease = min(changes)
+    
+    
+    
 print(f"Total Months : {total_month}")
 print(f"Total : {total_amount}")
+print(f"Average Change : $ {avg_change}")
+print(f"Greatest increase in profits : {greatest_increase}")
+print(f"Greatest decrease in profits : {greatest_decrease}")
