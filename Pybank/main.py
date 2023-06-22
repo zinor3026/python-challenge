@@ -8,7 +8,9 @@ changes = []
 previous = 0
 avg_change = 0
 greatest_increase = 0
-greatest_decrease = 0
+greatest_decrease = 100000000
+date_greatest_increase = ""
+date_greatest_decrease = ""
 
 
 #defining path to csv file in resources
@@ -33,30 +35,39 @@ with open(path) as budget:
             
             change = current_change - previous
             changes.append(change)
-    
-        previous = current_change  
+        
+        change = current_change - previous
+        if change > greatest_increase:
+            greatest_increase = change
+            date_greatest_increase = row[0]
+        if change < greatest_decrease:
+            greatest_decrease = change
+            date_greatest_decrease = row[0]
+        previous = current_change 
+        
+            
         
     #Calculating average change
     avg_change = sum(changes)/len(changes)
     avg_change = round(avg_change, 2)
     
-    #Calculating greatest increase and decrease
-    greatest_increase = max(changes)
-    greatest_decrease = min(changes)
     
-    
-    
+                
+print("Financial Analysis")    
+print("-----------------------------------")    
 print(f"Total Months : {total_month}")
-print(f"Total : {total_amount}")
+print(f"Total : $ {total_amount}")
 print(f"Average Change : $ {avg_change}")
-print(f"Greatest increase in profits : {greatest_increase}")
-print(f"Greatest decrease in profits : {greatest_decrease}")
+print(f"Greatest increase in profits : {date_greatest_increase} $({greatest_increase})")
+print(f"Greatest decrease in profits : {date_greatest_decrease} $({greatest_decrease})")
 
 output_path = os.path.join('python-challenge','Pybank','analysis','financial_analysis.txt') 
 
 with open(output_path,'w') as result:
+    result.write(f"Financial Analysis\n")
+    result.write(f"-------------------------------\n")
     result.write(f"Total Months : {total_month}\n")
-    result.write(f"Total : {total_amount}\n")
+    result.write(f"Total : $ {total_amount}\n")
     result.write(f"Average Change : $ {avg_change}\n")
-    result.write(f"Greatest increase in profits : {greatest_increase}\n")
-    result.write(f"Greatest decrease in profits : {greatest_decrease}\n")
+    result.write(f"Greatest increase in profits : {date_greatest_increase} $({greatest_increase})\n")
+    result.write(f"Greatest decrease in profits : {date_greatest_decrease} $({greatest_decrease})\n")
