@@ -37,6 +37,8 @@ with open(path) as budget:
             changes.append(change)
         
         change = current_change - previous
+        
+        #Using if to get greatest increase and decrease with the dates
         if change > greatest_increase:
             greatest_increase = change
             date_greatest_increase = row[0]
@@ -52,6 +54,7 @@ with open(path) as budget:
     avg_change = round(avg_change, 2)
     
     
+#printing the result
                 
 print("Financial Analysis")    
 print("-----------------------------------")    
@@ -61,8 +64,11 @@ print(f"Average Change : $ {avg_change}")
 print(f"Greatest increase in profits : {date_greatest_increase} $({greatest_increase})")
 print(f"Greatest decrease in profits : {date_greatest_decrease} $({greatest_decrease})")
 
+#Defining path to write
+
 output_path = os.path.join('python-challenge','Pybank','analysis','financial_analysis.txt') 
 
+#Writing to a txt file
 with open(output_path,'w') as result:
     result.write(f"Financial Analysis\n")
     result.write(f"-------------------------------\n")
